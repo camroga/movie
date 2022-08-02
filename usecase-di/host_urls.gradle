@@ -1,0 +1,8 @@
+ext {
+    //Variables required for DEV profile...
+    devBaseUrl = "https://api.themoviedb.org/3/"
+    apiKey = "91a20129ba03c3666f1031d2b7e57dc4"
+    //Variables required for PROD profile...
+    prodBaseUrl = "https://api.themoviedb.org/3/"
+}
+

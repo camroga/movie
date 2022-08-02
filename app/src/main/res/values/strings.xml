@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">The Movies</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="movie_saved">List of movie saved</string>
+    <string name="movie_found_number">We found %d type of movie</string>
+    <string name="movie_not_found">We found no movie.</string>
+    <string name="movie_error_unauthorized">You are not authorized to get movie.</string>
+    <string name="movie_error_no_response">ERROR - Empty body response</string>
+    <string name="movie_error_data_base">ERROR - In local data base</string>
+    <string name="movie_error_unknown">"ERROR - Unknown error, message:  %s</string>
+</resources>
