@@ -29,7 +29,7 @@ data class MovieResponse(
     @SerializedName("homepage")
     var homepage: String?,
     @SerializedName("id")
-    var id: Int? = null,
+    var id: Int? = -1,
     @SerializedName("imdb_id")
     var imdbId: String?,
     @SerializedName("original_language")
@@ -37,7 +37,7 @@ data class MovieResponse(
     @SerializedName("original_title")
     var originalTitle: String?,
     @SerializedName("overview")
-    var overview: String?,
+    var overview: String = "",
     @SerializedName("popularity")
     var popularity: Double? = null,
     @SerializedName("poster_path")
@@ -55,7 +55,7 @@ data class MovieResponse(
     @SerializedName("tagline")
     var tagline: String?,
     @SerializedName("title")
-    var title: String?,
+    var title: String = "",
     @SerializedName("video")
     var video: Boolean?,
     @SerializedName("vote_average")

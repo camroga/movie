@@ -17,18 +17,18 @@ import kotlinx.coroutines.flow.flowOn
 class RemoteMovieDataSource(private val api: MovieRestApi) {
 
     fun getTopRatedMovies(): Flow<Either> = flow {
-            try {
-                val response = api.getTopRatedMovies(apiKey = API_KEY, page = 1)
-                if (response.isSuccessful) {
-                    response.body()?.results?.let { body ->
-                        emit(Success(body.map { dto -> dto.toMovieModel() }))
-                    } ?: emit(Error(EmptyResponseError))
-                } else {
-                    emit(Error(NetworkError(response.code())))
-                }
-            } catch (e: Exception) {
-                emit(Error(UnknownError(e)))
+        try {
+            val response = api.getTopRatedMovies(apiKey = API_KEY, page = 1)
+            if (response.isSuccessful) {
+                response.body()?.results?.let { body ->
+                    emit(Success(body.map { dto -> dto?.toMovieModel() }))
+                } ?: emit(Error(EmptyResponseError))
+            } else {
+                emit(Error(NetworkError(response.code())))
             }
-        }.flowOn(IO) // Use the IO thread for this Flow
+        } catch (e: Exception) {
+            emit(Error(UnknownError(e)))
+        }
+    }.flowOn(IO) // Use the IO thread for this Flow
 
 }

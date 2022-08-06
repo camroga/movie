@@ -17,22 +17,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.buildreams.themortal.R
-import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState
 import com.buildreams.themovies.domain.model.Movie
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity
+import com.buildreams.themovies.ui.components.CardsMovies
+import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnError
+import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnLoading
+import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnMovieLoaded
+import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnMovieSaved
 
 @Composable
 fun Movies(navController: NavController, movieViewModel: MovieViewModel) {
     val uiState by movieViewModel.moviesState.collectAsState()
     when (uiState) {
         //TODO review data class example
-        is MovieScreenState.OnMovieLoaded -> Cards((uiState as MovieScreenState.OnMovieLoaded).movies)
-        is MovieScreenState.OnError -> handleErrorFetchingMovies((uiState as MovieScreenState.OnError).error)
-        MovieScreenState.OnLoading ->
+        is OnMovieLoaded -> CardsMovies((uiState as OnMovieLoaded).movies)
+        is OnError -> handleErrorFetchingMovies((uiState as OnError).error)
+        OnLoading ->
             Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
-        is MovieScreenState.OnMovieSaved -> handleMoviesSaved()
+        is OnMovieSaved -> handleMoviesSaved()
     }
 
 }
@@ -66,23 +70,3 @@ private fun getMessageFromError(error: ErrorEntity): String =
         )
         else -> TODO()
     }
-
-@Composable
-fun Cards(movies: List<Movie>) {
-    Column(Modifier.fillMaxWidth()) {
-        movies.forEach { movie ->
-            Column(Modifier.fillMaxWidth()) {
-                /*if (movie.image.isNotEmpty()) {
-                    Image(
-                        painter = rememberAsyncImagePainter(movie.image),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }*/
-                Text(text = movie.title)
-                Text(text = movie.voteAverage.toString())
-                Text(text = movie.overview)
-            }
-        }
-    }
-}

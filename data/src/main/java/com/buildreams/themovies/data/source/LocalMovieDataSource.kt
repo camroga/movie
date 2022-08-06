@@ -34,7 +34,7 @@ class LocalMovieDataSource constructor(private val dao: MovieDao) {
         } catch (e: Exception) {
             emit(Error(UnknownError(e)))
         }
-    }.flowOn(IO)
+    }.flowOn(IO) // Use the IO thread for this Flow
 
     suspend fun insertAllMovies(movies: List<Movie>): Flow<Either> = flow {
         try {
@@ -44,6 +44,6 @@ class LocalMovieDataSource constructor(private val dao: MovieDao) {
         } catch (e: Exception) {
             emit(Error(DataBaseError))
         }
-    }
+    }.flowOn(IO) // Use the IO thread for this Flow
 
 }

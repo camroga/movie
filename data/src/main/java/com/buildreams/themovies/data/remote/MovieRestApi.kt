@@ -13,5 +13,5 @@ interface MovieRestApi {
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int
-    ): Response<PageResult<MovieResponse>>
+    ): Response<PageResult<MovieResponse?>>
 }
