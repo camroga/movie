@@ -1,4 +1,4 @@
-package com.buildreams.themortal.ui.theme
+package com.buildreams.themovies.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun TheMortalTheme(
+fun TheMovieTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

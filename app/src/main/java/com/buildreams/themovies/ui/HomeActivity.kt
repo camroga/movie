@@ -19,7 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.buildreams.themortal.ui.theme.TheMortalTheme
+import com.buildreams.themovies.ui.theme.TheMovieTheme
 import com.buildreams.themovies.ui.movie.MovieViewModel
 import com.buildreams.themovies.ui.movie.Movies
 import com.buildreams.themovies.ui.movie.screen_state.MovieNetworkErrorInterpreter
@@ -49,7 +49,7 @@ class HomeActivity : ComponentActivity() {
                 // collecting when the lifecycle is STOPPED
                 setContent {
                     val navController = rememberNavController()
-                    TheMortalTheme {
+                    TheMovieTheme {
                         // A surface container using the 'background' color from the theme
                         Surface(
                             modifier = Modifier.fillMaxSize(),
@@ -86,7 +86,7 @@ class HomeActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    TheMortalTheme {
+    TheMovieTheme {
         /*Movies(
             navController,
             movieViewModel

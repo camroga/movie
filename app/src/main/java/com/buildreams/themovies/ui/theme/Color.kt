@@ -1,4 +1,4 @@
-package com.buildreams.themortal.ui.theme
+package com.buildreams.themovies.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
