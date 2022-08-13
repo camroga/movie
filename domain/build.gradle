@@ -14,7 +14,8 @@ dependencies {
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.mockk:mockk:$mockK_version"
-    testImplementation 'app.cash.turbine:turbine:0.9.0'
+    //Using to test flow
+    testImplementation "app.cash.turbine:turbine:$turbine_version"
     //For InstantTaskExecutorRule
     testImplementation "androidx.arch.core:core-testing:$arch_test_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutine_version"

@@ -6,8 +6,21 @@ buildscript {
         android_target_sdk_version = 31
         android_build_tool_version = "30.0.3"
 
+        //UI
+        appcompat_version = '1.4.2'
+        material_version = '1.6.1'
+        material3_version = '1.0.0-alpha15'
+        constraintlayout_version = '2.1.4'
+        navigation_version = '2.5.1'
+        picasso_version = '2.71828'
+        compose_version = '1.2.1'
+        compose_activity_version = '1.5.1'
+        compose_tooling_version = '1.3.0-alpha01'
+        compose_compiler_version = '1.3.0'
+        coil_compose = '2.1.0'
+
         //Kotlin
-        kotlin_version = '1.6.10'
+        kotlin_version = '1.7.10'
         core_ktx_version = '1.8.0'
 
         //Coroutines
@@ -16,24 +29,18 @@ buildscript {
         //Arch
         arch_test_version = '2.1.0'
 
-        //UI
-        appcompat_version = '1.4.2'
-        material_version = '1.6.1'
-        constraintlayout_version = '2.1.4'
-        navigation_version = '2.5.1'
-        picasso_version = '2.71828'
-        compose_version = '1.1.1'
-        compose_tooling_version = '1.3.0-alpha01'
-        coil_compose = '2.1.0'
+        //WorkManager
+        work_runtime_version = '2.7.1'
 
         //Test
         junit_version = "4.13.2"
         mockK_version = "1.11.0"
         test_ext_version = '1.1.3'
         espresso_core_version = '3.4.0'
+        turbine_version = "0.0.9"
 
         //Moshi
-        retrofit_moshi_version = '2.4.0'
+        retrofit__version = '2.9.0'
 
         //Dagger
         dagger_version = '2.40.5'
@@ -42,7 +49,7 @@ buildscript {
         room_version = '2.4.2'
 
         //Hilt
-        hilt_version = '2.40.5'
+        hilt_version = '2.42'
         hilt_work_version = '1.0.0'
         hilt_compiler_version = '1.0.0'
     }
@@ -53,6 +60,12 @@ buildscript {
                 "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutine_version",
                 "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutine_version"
         ]
+
+        project.ext.retrofit = [
+                "com.squareup.retrofit2:retrofit:$retrofit__version",
+                "com.squareup.retrofit2:converter-gson:$retrofit__version"
+        ]
+
     }
 
     dependencies {

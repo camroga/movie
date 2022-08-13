@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.single
 
 class MovieRepository(
     private val remoteMovieDataSource: RemoteMovieDataSource,
@@ -21,7 +20,9 @@ class MovieRepository(
     override suspend fun getTopRatedMovies(): Flow<Either> = flow {
         remoteMovieDataSource.getTopRatedMovies().collect { result ->
             if (result is Error) {
-                emit(localMovieDataSource.getTopRatedMovies().single())
+                localMovieDataSource.getTopRatedMovies().collect { localResult ->
+                    emit(localResult)
+                }
             } else {
                 emit(result)
             }

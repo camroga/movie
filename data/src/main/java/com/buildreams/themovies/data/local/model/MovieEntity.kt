@@ -9,14 +9,14 @@ import androidx.room.PrimaryKey
 data class MovieEntity(
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "id") val id: Int? = -1,
+    @ColumnInfo(name = "id") val id: Int,
 
     @NonNull
-    @ColumnInfo(name = "title") val title: String = "",
+    @ColumnInfo(name = "title") val title: String,
 
     @NonNull
-    @ColumnInfo(name = "overview") val overview: String = "",
+    @ColumnInfo(name = "overview") val overview: String,
 
     @NonNull
-    @ColumnInfo(name = "voteAverage") val voteAverage: Double = 0.0,
+    @ColumnInfo(name = "voteAverage") val voteAverage: Double,
 )

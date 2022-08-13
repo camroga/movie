@@ -19,7 +19,7 @@
         android:theme="@style/Theme.TheMortal"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.HomeActivity"
+            android:name="com.buildreams.themovies.ui.HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.TheMortal" >

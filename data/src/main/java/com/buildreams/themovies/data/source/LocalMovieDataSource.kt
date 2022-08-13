@@ -21,6 +21,7 @@ class LocalMovieDataSource constructor(private val dao: MovieDao) {
 
     fun getTopRatedMovies(): Flow<Either> = flow {
         try {
+            //TODO never emit if there is not local data
             dao.getMovie()
                 // to ensure that you only get notified when the data you’re interested in has changed
                 .distinctUntilChanged()

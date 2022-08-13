@@ -16,7 +16,7 @@ fun MovieResponse.toMovieModel() =
 
 fun Movie.toMovieEntityModel() =
     MovieEntity(
-        id = this.id,
+        id = this.id!!,
         title = this.title,
         voteAverage = this.voteAverage!!,
         overview = this.overview
