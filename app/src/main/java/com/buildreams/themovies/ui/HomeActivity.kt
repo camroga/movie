@@ -22,6 +22,7 @@ import com.buildreams.themovies.ui.movie.Movies
 import com.buildreams.themovies.ui.movie.screen_state.MovieNetworkErrorInterpreter
 import com.buildreams.themovies.ui.theme.TheMovieTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,13 +30,11 @@ class HomeActivity : ComponentActivity() {
 
     private val movieViewModel: MovieViewModel by viewModels()
 
-
-    private lateinit var networkErrorInterpreter: MovieNetworkErrorInterpreter
+    @Inject
+    lateinit var networkErrorInterpreter: MovieNetworkErrorInterpreter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        networkErrorInterpreter = MovieNetworkErrorInterpreter(context = applicationContext)
 
         // Start a coroutine in the lifecycle scope
         lifecycleScope.launch {
@@ -74,7 +73,8 @@ class HomeActivity : ComponentActivity() {
             composable("moviesScreen") {
                 Movies(
                     navController,
-                    movieViewModel
+                    movieViewModel,
+                    networkErrorInterpreter
                 )
             }
         }

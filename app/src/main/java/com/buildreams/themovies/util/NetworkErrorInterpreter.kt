@@ -1,4 +1,4 @@
-package com.buildreams.themortal.util
+package com.buildreams.themovies.util
 
 interface NetworkErrorInterpreter {
     fun interpret(status: Int): String

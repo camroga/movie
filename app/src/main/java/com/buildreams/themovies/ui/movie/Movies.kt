@@ -1,8 +1,6 @@
 package com.buildreams.themovies.ui.movie
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
@@ -17,38 +15,49 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.buildreams.themortal.R
-import com.buildreams.themovies.domain.model.Movie
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity
+import com.buildreams.themovies.domain.model.action.error.ErrorEntity.DataBaseError
+import com.buildreams.themovies.domain.model.action.error.ErrorEntity.EmptyResponseError
+import com.buildreams.themovies.domain.model.action.error.ErrorEntity.NetworkError
+import com.buildreams.themovies.domain.model.action.error.ErrorEntity.UnknownError
 import com.buildreams.themovies.ui.components.CardsMovies
+import com.buildreams.themovies.ui.movie.screen_state.MovieNetworkErrorInterpreter
 import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnError
 import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnLoading
 import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnMovieLoaded
 import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnMovieSaved
 
 @Composable
-fun Movies(navController: NavController, movieViewModel: MovieViewModel) {
+fun Movies(
+    navController: NavController,
+    movieViewModel: MovieViewModel,
+    networkErrorInterpreter: MovieNetworkErrorInterpreter
+) {
     val uiState by movieViewModel.moviesState.collectAsState()
     when (uiState) {
         //TODO review data class example
         is OnMovieLoaded -> CardsMovies((uiState as OnMovieLoaded).movies)
-        is OnError -> handleErrorFetchingMovies((uiState as OnError).error)
+        is OnError -> HandleErrorFetchingMovies((uiState as OnError).error, networkErrorInterpreter)
         OnLoading ->
             Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
-        is OnMovieSaved -> handleMoviesSaved()
+        is OnMovieSaved -> HandleMoviesSaved()
     }
 
 }
 
 @Composable
-private fun handleMoviesSaved() {
+private fun HandleMoviesSaved() {
     SnackBar(stringResource(R.string.movie_saved))
 }
 
 @Composable
-private fun handleErrorFetchingMovies(error: ErrorEntity) {
-    SnackBar(getMessageFromError(error))
+private fun HandleErrorFetchingMovies(
+    error: ErrorEntity,
+    networkErrorInterpreter: MovieNetworkErrorInterpreter
+) {
+    SnackBar(getMessageFromError(error, networkErrorInterpreter))
 }
 
 @Composable
@@ -59,12 +68,17 @@ private fun SnackBar(text: String) {
 }
 
 @Composable
-private fun getMessageFromError(error: ErrorEntity): String =
+private fun getMessageFromError(
+    error: ErrorEntity,
+    networkErrorInterpreter: MovieNetworkErrorInterpreter
+): String =
     when (error) {
-        ErrorEntity.EmptyResponseError -> stringResource(R.string.movie_error_no_response)
-        ErrorEntity.DataBaseError -> stringResource(R.string.movie_error_data_base)
-//        is ErrorEntity.NetworkError -> networkErrorInterpreter.interpret(error.httpStatus)
-        is ErrorEntity.UnknownError -> stringResource(
+        EmptyResponseError -> stringResource(R.string.movie_error_no_response)
+        DataBaseError -> stringResource(R.string.movie_error_data_base)
+        is NetworkError -> networkErrorInterpreter.interpret(
+            error.httpStatus
+        )
+        is UnknownError -> stringResource(
             R.string.movie_error_unknown,
             error.exception.message!!
         )

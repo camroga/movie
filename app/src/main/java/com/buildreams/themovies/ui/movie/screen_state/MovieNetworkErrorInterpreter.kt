@@ -2,7 +2,8 @@ package com.buildreams.themovies.ui.movie.screen_state
 
 import android.content.Context
 import com.buildreams.themortal.R
-import com.buildreams.themortal.util.NetworkErrorInterpreter
+import com.buildreams.themovies.util.NetworkErrorInterpreter
+
 
 class MovieNetworkErrorInterpreter(private val context: Context) : NetworkErrorInterpreter {
 
