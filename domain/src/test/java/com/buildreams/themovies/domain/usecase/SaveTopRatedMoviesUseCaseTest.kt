@@ -5,6 +5,7 @@ import com.buildreams.themovies.domain.model.Movie
 import com.buildreams.themovies.domain.model.action.Either
 import com.buildreams.themovies.domain.model.action.Either.Error
 import com.buildreams.themovies.domain.model.action.Either.Success
+import com.buildreams.themovies.domain.model.action.error.ErrorEntity
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity.DataBaseError
 import com.buildreams.themovies.domain.repository.MovieRepository
 import io.mockk.MockKAnnotations
@@ -43,9 +44,9 @@ class SaveTopRatedMoviesUseCaseTest {
             }
             //when
             saveTopRatedMoviesUseCase.invoke(recipes = movies).test {
-                val result: Either = awaitItem()
+                val result: Either<Boolean, ErrorEntity> = awaitItem()
                 assert(result is Success)
-                assertTrue((result as Success).getData())
+                assertTrue((result as Success).data)
                 awaitComplete()
             }
             //then
@@ -61,9 +62,9 @@ class SaveTopRatedMoviesUseCaseTest {
             }
             //when
             saveTopRatedMoviesUseCase.invoke(recipes = movies).test {
-                val result: Either = awaitItem()
+                val result: Either<Boolean, ErrorEntity> = awaitItem()
                 assert(result is Error)
-                assertEquals(DataBaseError, (result as Error).error)
+                assertEquals(DataBaseError, (result as Error).data)
                 awaitComplete()
             }
             //then

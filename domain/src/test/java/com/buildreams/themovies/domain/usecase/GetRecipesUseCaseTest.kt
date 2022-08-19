@@ -5,6 +5,7 @@ import com.buildreams.themovies.domain.model.Movie
 import com.buildreams.themovies.domain.model.action.Either
 import com.buildreams.themovies.domain.model.action.Either.Error
 import com.buildreams.themovies.domain.model.action.Either.Success
+import com.buildreams.themovies.domain.model.action.error.ErrorEntity
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity.EmptyResponseError
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity.NetworkError
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity.UnknownError
@@ -43,9 +44,9 @@ class GetMoviesUseCaseTest {
             }
             //when
             getTopRatedMoviesUseCase.invoke().test {
-                val result: Either = awaitItem()
+                val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Success)
-                assertEquals(movies, (result as Success).getData())
+                assertEquals(movies, (result as Success).data)
                 awaitComplete()
             }
             //then
@@ -61,9 +62,9 @@ class GetMoviesUseCaseTest {
             }
             //when
             getTopRatedMoviesUseCase.invoke().test {
-                val result: Either = awaitItem()
+                val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Error)
-                assertEquals(EmptyResponseError, (result as Error).error)
+                assertEquals(EmptyResponseError, (result as Error).data)
                 awaitComplete()
             }
             //then
@@ -80,9 +81,9 @@ class GetMoviesUseCaseTest {
             }
             //when
             getTopRatedMoviesUseCase.invoke().test {
-                val result: Either = awaitItem()
+                val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Error)
-                assertEquals(httpError, (result as Error).error)
+                assertEquals(httpError, (result as Error).data)
                 awaitComplete()
             }
             //then
@@ -99,9 +100,9 @@ class GetMoviesUseCaseTest {
             }
             //when
             getTopRatedMoviesUseCase.invoke().test {
-                val result: Either = awaitItem()
+                val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Error)
-                assertEquals(unknownError, (result as Error).error)
+                assertEquals(unknownError, (result as Error).data)
                 awaitComplete()
             }
             //then

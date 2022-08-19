@@ -50,5 +50,5 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.mockk:mockk:$mockK_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutine_version"
-    testImplementation 'app.cash.turbine:turbine:0.9.0'
+    testImplementation "app.cash.turbine:turbine:$turbine_version"
 }
