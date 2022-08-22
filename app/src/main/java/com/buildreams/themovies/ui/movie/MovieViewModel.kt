@@ -33,7 +33,7 @@ class MovieViewModel @Inject constructor(
         //Call use case
         getTopRatedMoviesUseCase.invoke().collect { result ->
             when (result) {
-                is Error -> _moviesState.emit(OnError(result.data))
+                is Error -> _moviesState.emit(OnError(error = result.data))
                 is Success -> _moviesState.emit(OnMovieLoaded(movies = result.data))
             }
         }

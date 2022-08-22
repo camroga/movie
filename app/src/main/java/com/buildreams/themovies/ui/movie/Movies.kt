@@ -35,7 +35,6 @@ fun Movies(
 ) {
     val uiState by movieViewModel.moviesState.collectAsState()
     when (uiState) {
-        //TODO review data class example
         is OnMovieLoaded -> CardsMovies((uiState as OnMovieLoaded).movies)
         is OnError -> HandleErrorFetchingMovies((uiState as OnError).error, networkErrorInterpreter)
         OnLoading ->
@@ -44,7 +43,6 @@ fun Movies(
             }
         is OnMovieSaved -> HandleMoviesSaved()
     }
-
 }
 
 @Composable
