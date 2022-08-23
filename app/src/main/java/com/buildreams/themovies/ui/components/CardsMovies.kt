@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,12 +31,8 @@ import com.buildreams.themovies.util.MovieUtil.imagePathBuilder
 
 @Composable
 fun CardsMovies(movies: List<Movie>) {
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxWidth()
-    ) {
-        movies.forEach { movie ->
+    LazyColumn {
+        items(movies) { movie ->
             Card(
                 border = BorderStroke(1.dp, Color.LightGray),
                 modifier = Modifier

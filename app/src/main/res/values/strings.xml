@@ -6,7 +6,7 @@
     <string name="movie_found_number">We found %d type of movie</string>
     <string name="movie_not_found">We found no movie.</string>
     <string name="movie_error_unauthorized">You are not authorized to get movie.</string>
-    <string name="movie_error_no_response">ERROR - Empty body response</string>
-    <string name="movie_error_data_base">ERROR - In local data base</string>
-    <string name="movie_error_unknown">"ERROR - Unknown error, message:  %s</string>
+    <string name="movie_error_no_response">No movies available</string>
+    <string name="movie_error_data_base">No movie information stored</string>
+    <string name="movie_error_unknown">We are experiencing problems please try again later</string>
 </resources>
