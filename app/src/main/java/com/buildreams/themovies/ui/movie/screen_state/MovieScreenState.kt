@@ -9,4 +9,3 @@ sealed interface MovieScreenState {
     data class OnMovieLoaded(val movies: List<Movie>) : MovieScreenState
     data class OnError(val error: ErrorEntity) : MovieScreenState
 }
-

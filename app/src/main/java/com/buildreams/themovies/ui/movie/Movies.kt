@@ -8,7 +8,6 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,10 +32,9 @@ fun Movies(
     movieViewModel: MovieViewModel,
     networkErrorInterpreter: MovieNetworkErrorInterpreter
 ) {
-    val uiState by movieViewModel.moviesState.collectAsState()
-    when (uiState) {
-        is OnMovieLoaded -> CardsMovies((uiState as OnMovieLoaded).movies)
-        is OnError -> HandleErrorFetchingMovies((uiState as OnError).error, networkErrorInterpreter)
+    when (val uiState = movieViewModel.moviesState.collectAsState().value) {
+        is OnMovieLoaded -> CardsMovies(uiState.movies)
+        is OnError -> HandleErrorFetchingMovies(uiState.error, networkErrorInterpreter)
         OnLoading ->
             Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
