@@ -8,12 +8,17 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.buildreams.themortal.R
+import com.buildreams.themovies.domain.model.Movie
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity.DataBaseError
 import com.buildreams.themovies.domain.model.action.error.ErrorEntity.EmptyResponseError
@@ -32,15 +37,25 @@ fun Movies(
     movieViewModel: MovieViewModel,
     networkErrorInterpreter: MovieNetworkErrorInterpreter
 ) {
+    var movies by remember { mutableStateOf(emptyList<Movie>()) }
+
     when (val uiState = movieViewModel.moviesState.collectAsState().value) {
-        is OnMovieLoaded -> CardsMovies(uiState.movies)
-        is OnError -> HandleErrorFetchingMovies(uiState.error, networkErrorInterpreter)
+        is OnMovieLoaded -> {
+            movies = uiState.movies
+            movieViewModel.saveMovies(uiState.movies)
+        }
+        is OnError -> {
+            HandleErrorFetchingMovies(uiState.error, networkErrorInterpreter)
+            movieViewModel.getMovies()
+        }
         OnLoading ->
             Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         is OnMovieSaved -> HandleMoviesSaved()
     }
+
+    CardsMovies(movies)
 }
 
 @Composable

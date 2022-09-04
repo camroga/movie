@@ -27,12 +27,12 @@ class GetMoviesUseCaseTest {
     @MockK
     lateinit var movieRepository: MovieRepository
 
-    private lateinit var getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase
+    private lateinit var getTopRatedMoviesUseCase: RatedMoviesUseCase
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
-        getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase(movieRepository = movieRepository)
+        getTopRatedMoviesUseCase = RatedMoviesUseCase(movieRepository = movieRepository)
     }
 
     @Test
@@ -43,7 +43,7 @@ class GetMoviesUseCaseTest {
                 emit(Success(movies))
             }
             //when
-            getTopRatedMoviesUseCase.invoke().test {
+            getTopRatedMoviesUseCase.getTopRatedMovies().test {
                 val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Success)
                 assertEquals(movies, (result as Success).data)
@@ -61,7 +61,7 @@ class GetMoviesUseCaseTest {
                 emit(Error(EmptyResponseError))
             }
             //when
-            getTopRatedMoviesUseCase.invoke().test {
+            getTopRatedMoviesUseCase.getTopRatedMovies().test {
                 val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Error)
                 assertEquals(EmptyResponseError, (result as Error).data)
@@ -80,7 +80,7 @@ class GetMoviesUseCaseTest {
                 emit(Error(httpError))
             }
             //when
-            getTopRatedMoviesUseCase.invoke().test {
+            getTopRatedMoviesUseCase.getTopRatedMovies().test {
                 val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Error)
                 assertEquals(httpError, (result as Error).data)
@@ -99,7 +99,7 @@ class GetMoviesUseCaseTest {
                 emit(Error(unknownError))
             }
             //when
-            getTopRatedMoviesUseCase.invoke().test {
+            getTopRatedMoviesUseCase.getTopRatedMovies().test {
                 val result: Either<List<Movie>, ErrorEntity> = awaitItem()
                 assert(result is Error)
                 assertEquals(unknownError, (result as Error).data)

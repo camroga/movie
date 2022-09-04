@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 
 class LocalMovieDataSource constructor(private val dao: MovieDao) {
 
-    fun getTopRatedMovies() = flow {
+    suspend fun getTopRatedMovies() = flow {
         try {
             //TODO never emit if there is not local data
             dao.getMovie()

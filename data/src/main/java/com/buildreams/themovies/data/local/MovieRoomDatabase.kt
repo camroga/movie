@@ -9,7 +9,7 @@ import com.buildreams.themovies.data.local.model.MovieEntity
 @Database(
     entities = [MovieEntity::class],
     version = VERSION,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class MovieRoomDatabase : RoomDatabase() {
     abstract fun getMovieDao(): MovieDao

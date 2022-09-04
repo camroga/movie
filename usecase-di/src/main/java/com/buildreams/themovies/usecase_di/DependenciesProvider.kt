@@ -3,7 +3,7 @@ package com.doepiccoding.usecase_di
 import com.buildreams.themovies.data.repository.MovieRepository
 import com.buildreams.themovies.data.source.LocalMovieDataSource
 import com.buildreams.themovies.data.source.RemoteMovieDataSource
-import com.buildreams.themovies.domain.usecase.GetTopRatedMoviesUseCase
+import com.buildreams.themovies.domain.usecase.RatedMoviesUseCase
 import com.buildreams.themovies.domain.usecase.SaveTopRatedMoviesUseCase
 import dagger.Module
 import dagger.Provides
@@ -20,12 +20,12 @@ object DependenciesProvider {
     fun provideGetTopRatedMoviesUseCase(
         remoteMovieDataSource: RemoteMovieDataSource,
         localMovieDataSource: LocalMovieDataSource
-    ): GetTopRatedMoviesUseCase {
+    ): RatedMoviesUseCase {
         val repository = MovieRepository(
             remoteMovieDataSource = remoteMovieDataSource,
             localMovieDataSource = localMovieDataSource
         )
-        return GetTopRatedMoviesUseCase(repository)
+        return RatedMoviesUseCase(repository)
     }
 
     @Provides

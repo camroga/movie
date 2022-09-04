@@ -18,13 +18,13 @@ abstract class MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(movies: List<MovieEntity>?)
 
-    @Query("DELETE FROM movie")
+    @Query("DELETE FROM movies")
     abstract fun delete()
 
     @Delete
     abstract fun deleteAll(movies: List<MovieEntity>?)
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM movies")
     abstract fun getMovie(): Flow<List<MovieEntity>?>
 
     @Transaction

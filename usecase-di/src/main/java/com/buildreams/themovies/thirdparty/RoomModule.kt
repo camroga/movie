@@ -19,12 +19,12 @@ object RoomModule {
 
     @Singleton // Tell Dagger-Hilt to create a singleton accessible everywhere in ApplicationCompenent (i.e. everywhere in the application)
     @Provides
-    fun provideYourDatabase(
+    fun provideMovieDatabase(
         @ApplicationContext app: Context
     ) = Room.databaseBuilder(
         app,
         MovieRoomDatabase::class.java,
-        "the_movie_database"
+        "movie_database"
     ).build()
 
     @Singleton

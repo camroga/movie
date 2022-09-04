@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.buildreams.themovies.domain.model.Movie
 import com.buildreams.themovies.domain.model.action.Either.Error
 import com.buildreams.themovies.domain.model.action.Either.Success
-import com.buildreams.themovies.domain.usecase.GetTopRatedMoviesUseCase
+import com.buildreams.themovies.domain.usecase.RatedMoviesUseCase
 import com.buildreams.themovies.domain.usecase.SaveTopRatedMoviesUseCase
 import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState
 import com.buildreams.themovies.ui.movie.screen_state.MovieScreenState.OnError
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
+    private val ratedMoviesUseCase: RatedMoviesUseCase,
     private val saveTopRatedMoviesUseCase: SaveTopRatedMoviesUseCase
 ) : ViewModel() {
 
@@ -31,7 +31,16 @@ class MovieViewModel @Inject constructor(
 
     fun fetchMovies() = viewModelScope.launch {
         //Call use case
-        getTopRatedMoviesUseCase.invoke().collect { result ->
+        ratedMoviesUseCase.fetchTopRatedMovies().collect { result ->
+            when (result) {
+                is Error -> _moviesState.emit(OnError(error = result.data))
+                is Success -> _moviesState.emit(OnMovieLoaded(movies = result.data))
+            }
+        }
+    }
+
+    fun getMovies() = viewModelScope.launch {
+        ratedMoviesUseCase.getTopRatedMovies().collect { result ->
             when (result) {
                 is Error -> _moviesState.emit(OnError(error = result.data))
                 is Success -> _moviesState.emit(OnMovieLoaded(movies = result.data))
