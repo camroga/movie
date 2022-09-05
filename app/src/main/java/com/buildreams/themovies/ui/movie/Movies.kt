@@ -1,11 +1,10 @@
 package com.buildreams.themovies.ui.movie
 
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,8 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.buildreams.themortal.R
 import com.buildreams.themovies.domain.model.Movie
@@ -45,37 +44,27 @@ fun Movies(
             movieViewModel.saveMovies(uiState.movies)
         }
         is OnError -> {
-            HandleErrorFetchingMovies(uiState.error, networkErrorInterpreter)
+            Toast.makeText(
+                LocalContext.current,
+                getMessageFromError(uiState.error, networkErrorInterpreter),
+                LENGTH_SHORT
+            ).show()
             movieViewModel.getMovies()
         }
-        OnLoading ->
-            Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        is OnMovieSaved -> HandleMoviesSaved()
+        OnLoading -> Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+        is OnMovieSaved -> Toast.makeText(
+            LocalContext.current,
+            stringResource(R.string.movie_saved),
+            LENGTH_SHORT
+        ).show()
     }
-
     CardsMovies(movies)
-}
 
-@Composable
-private fun HandleMoviesSaved() {
-    SnackBar(stringResource(R.string.movie_saved))
-}
-
-@Composable
-private fun HandleErrorFetchingMovies(
-    error: ErrorEntity,
-    networkErrorInterpreter: MovieNetworkErrorInterpreter
-) {
-    SnackBar(getMessageFromError(error, networkErrorInterpreter))
-}
-
-@Composable
-private fun SnackBar(text: String) {
-    Snackbar(modifier = Modifier.padding(8.dp)) {
-        Text(text = text)
-    }
 }
 
 @Composable
