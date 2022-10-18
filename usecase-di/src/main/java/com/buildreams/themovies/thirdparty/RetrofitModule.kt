@@ -7,7 +7,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -20,9 +22,17 @@ object RetrofitModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(buildRetrofitClient())
 //            .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
+
+    private fun buildRetrofitClient(): OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(3, TimeUnit.MINUTES)
+        .readTimeout(3, TimeUnit.MINUTES)
+        .writeTimeout(3, TimeUnit.MINUTES)
+//        .addInterceptor(AuthenticationInterceptor())
+        .build()
 
     @Provides
     @Singleton

@@ -1,4 +1,4 @@
-package com.doepiccoding.usecase_di
+package com.buildreams.themovies.usecase_di
 
 import com.buildreams.themovies.data.repository.MovieRepository
 import com.buildreams.themovies.data.source.LocalMovieDataSource
